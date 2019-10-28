@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Bread&Butter
+{% endblock %}
+
+{% block headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/recipes.css') }}" />
+    <script src="{{ url_for('static', filename='scripts/recipes.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {% block navbar %}
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <a href="{{ url_for('index') }}" class="navbar-brand mr-0" id="title"></a>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li>
+                    <a class="nav-link" href="{{ url_for('saved_recipes') }}">Saved Recipes</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ url_for('search') }}">Back to Search</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    {% endblock %}
+
+    <div class="header-image">
+        <h3 class="header-text">{{ title }}</h3>
+    </div>
+
+    {% if based_on %}
+        <div>
+            <p id="based_on">
+                <strong> Based on your search: </strong> {{ based_on }}
+            </p>
+        </div>
+    {% endif %}
+
+    <div id="results-container">
+        <div class="card-columns">
+
+            {% for recipe in recipes %}
+
+                <div class="card">
+
+                    {% if recipe.image %}
+                        <img class="card-img-top" src="{{ recipe.image }}" alt="Recipe Image">
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ recipe.dish_name }}</h5>
+                        <hr>
+                        <p class="card-text">
+                            Spoonacular Rating: {{ recipe.spoonacular_score }}/100
+                        </p>
+
+                        {% if recipe.cook_time_min and recipe.prep_time_min %}
+                            <b class="total-time">
+                                <i class="fa fa-clock-o"></i> {{ recipe.cook_time_min + recipe.prep_time_min }} minutes
+                            </b>
+                        {% endif %}
+
+                        <form action="{{ url_for('recipe')}}" method="post">
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="hidden" value="{{ recipe.spoonacular_id }}" name="recipe_spoonacular_id">
+                                </div>
+                            </div>
+
+                            <button class="btn" type="submit">See More</button>
+
+                        </form>
+
+                        <div>
+                            {% if not recipe.is_saved_by_user %}
+                                <form action="{{ url_for('save_recipe')}}" method="post">
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="hidden" value="{{ recipe.spoonacular_id }}" name="recipe_spoonacular_id">
+                                        </div>
+                                    </div>
+
+                                    <button class="btn save" id="button-{{ recipe.spoonacular_id }}" type="submit">Save Recipe</button>
+                                </form>
+
+                            {% else %}
+                                <button class="btn checked" type="submit"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp; Saved Recipe</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

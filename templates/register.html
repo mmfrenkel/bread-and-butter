@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Bread&Butter
+{% endblock %}
+
+{% block headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/login.css') }}" />
+{% endblock %}
+
+{% block body %}
+
+    {% block navbar %}
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <a href="{{ url_for('index') }}" class="navbar-brand mr-0" id="title"></a>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                    <a class="nav-link" href="{{ url_for('login') }}"> Login</a>
+                </li>
+            </ul>
+        </div>
+    {% endblock %}
+
+
+    <div class="center_box" id="login_container">
+
+        <h4> Registration </h4>
+        <hr>
+        <h5> {{ message }} </h5>
+
+        <form action="{{ url_for('register') }}" method="post">
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <input class="form-control" placeholder="First Name" name="first_name">
+                </div>
+            </div> <!-- form-group// -->
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <input class="form-control" placeholder="Last Name" name="last_name">
+                </div>
+            </div> <!-- form-group// -->
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                    </div>
+                    <input class="form-control" placeholder="Email" name="email">
+                </div>
+            </div> <!-- form-group// -->
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <input class="form-control" placeholder="Username" name="username">
+                </div>
+            </div> <!-- form-group// -->
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    <input class="form-control" placeholder="******" type="password" name="password">
+                </div>
+            </div> <!-- form-group// -->
+
+            <hr>
+            <div class="form-group">
+                <a href="{{ url_for('login') }}"> I already have a login </a>
+            </div> <!-- form-group// -->
+
+            <div class="form-group">
+                <button class="btn btn-primary">Create New User</button>
+            </div> <!-- form-group// -->
+
+        </form>
+    </div>
+
+{% endblock %}

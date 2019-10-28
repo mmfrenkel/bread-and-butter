@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Bread&Butter
+{% endblock %}
+
+{% block headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/single_recipe.css') }}" />
+    <script src="{{ url_for('static', filename='scripts/recipes.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {% block navbar %}
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <a href="{{ url_for('index') }}" class="navbar-brand mr-0" id="title"></a>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li>
+                    <a class="nav-link" href="{{ url_for('saved_recipes') }}">Saved Recipes</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ url_for('search') }}">Back to Search</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    {% endblock %}
+
+    <div id="recipe-container">
+
+        <div id="header-recipe">
+            <h3 class="header-text">{{ recipe.dish_name }}</h3>
+            <hr>
+        </div>
+
+        <div id="about-recipe">
+
+            <div class="col-md-6" id="recipe-img-container">
+                {% if recipe.image %}
+                    <img class="recipe-img" src="{{ recipe.image }}" alt="">
+                {% endif %}
+            </div>
+
+            <h4> About this recipe:</h4>
+            <div>
+                <p><strong>Spoonacular Rating:</strong>
+                    {{ recipe.spoonacular_score }}/100
+                </p>
+            </div>
+
+            <div>
+                <p><i class="fa fa-clock-o"></i><strong> Prep Time: </strong>
+                    {% if recipe.prep_time_min %}
+                        {{ recipe.prep_time_min }} minutes
+                    {% else %}
+                        unavailable
+                    {% endif %}
+                </p>
+            </div>
+
+            <div>
+                <p><i class="fa fa-clock-o"></i><strong> Cook Time: </strong>
+                    {% if recipe.cook_time_min %}
+                        {{ recipe.cook_time_min }} minutes
+                    {% else %}
+                        unavailable
+                    {% endif %}
+                </p>
+            </div>
+
+            <div id="allergens">
+                {% if not recipe.is_gluten_free %}
+                    <img src="/static/img/gluten.png">
+                {% endif %}
+                {% if not recipe.is_dairy_free %}
+                    <img src="/static/img/dairy.png">
+                {% endif %}
+            </div>
+
+            <div id="recipe-ingredients">
+                <h4> Ingredients List: </h4>
+                <div id="ingredients-list">
+                    {% for ingredient in recipe.ingredients %}
+                        <p> {{ ingredient }} </p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div id="recipe-instructions">
+                <h4> Instructions: </h4>
+                {% if recipe.step_instructions %}
+                    <ol>
+                        {% for instruction in recipe.step_instructions %}
+                            <li>{{ instruction.step }}</li>
+                        {% endfor %}
+                    </ol>
+                {% elif recipe.instructions %}
+                    <p> {{ recipe.instructions  }}</p>
+                {% else %}
+                    <p> Precise recipe instructions are not available! Be creative!</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div>
+            {% if not recipe.is_saved_by_user %}
+                <form action="{{ url_for('save_recipe')}}" method="post">
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="hidden" value="{{ recipe.spoonacular_id }}" name="recipe_spoonacular_id">
+                        </div>
+                    </div>
+
+                    <button class="btn save" id="button-{{ recipe.spoonacular_id }}" type="submit">Save Recipe</button>
+
+                </form>
+
+            {% else %}
+                <button class="btn checked" type="submit">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    &nbsp; Saved Recipe
+                </button>
+
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,195 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Bread&Butter
+{% endblock %}
+
+{% block headers %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/search.css') }}" />
+    <script src="{{ url_for('static', filename='scripts/search.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script id="new-ingredient" type="text/template">
+        <div class="form-group">
+            <div class="input-group ingredient">
+                <input class="form-control user-input" placeholder="Another Ingredient (e.g., Chicken)" name="ingredient">
+            </div>
+        </div> <!-- form-group// -->
+    </script>
+{% endblock %}
+
+{% block body %}
+
+    {% block navbar %}
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <a href="{{ url_for('index') }}" class="navbar-brand mr-0" id="title"></a>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li>
+                    <a class="nav-link" id="welcome" href="{{ url_for('search') }}">Hello, {{ name }}! </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ url_for('saved_recipes') }}">Saved Recipes</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    {% endblock %}
+
+    <div class="header-image">
+        <h3 class="header-text">Search Recipes</h3>
+    </div>
+
+    <div class="container" id="search-options">
+
+        <h4>1. Select a search category:</h4>
+        <div class="row">
+            <div class="col">
+                <button class="btn category" id="search-ingredients" data-category="ingredients-input">
+                    <img class="logo" src="/static/img/magnifying_glass.png">
+                    <p>Pantry Ingredients</p>
+                </button>
+            </div>
+            <div class="col">
+                <button class="btn category" id="search-meal" data-category="meal-input">
+                    <img class="logo" src="/static/img/dinner.png">
+                    <p>Meal</p>
+                </button>
+            </div>
+            <div class="col">
+                <button class="btn category" id="search-allergy" data-category="allergies-input">
+                   <img class="logo" src="/static/img/allergies.png">
+                    <p>Dietary Restrictions</p>
+                </button>
+            </div>
+            <div class="col">
+
+                <form action="{{ url_for('search_recipes')}}" method="post" id="random-form">
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="hidden" value="random" name="query_type">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn category" id="search-random" data-category="random">
+                           <img class="logo" src="/static/img/clover.png">
+                            <p>Feeling lucky</p>
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container search-input" id="ingredients-input">
+
+        <h4>2. Give me some ingredients:</h4>
+        <p>Provide any item in your pantry, one at a time.</p>
+
+        <form action="{{ url_for('search_recipes')}}" method="post" id="ingredient-form">
+
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="hidden" value="ingredients" name="query_type">
+                </div>
+            </div>
+
+            <div id="ingredient-line-items">
+                <div class="form-group">
+                    <div class="input-group ingredient">
+                        <input class="form-control user-input" placeholder="Ingredient (e.g., Eggs)" name="ingredient">
+                    </div>
+                </div> <!-- form-group// -->
+            </div>
+
+            <button class="btn" id="add-another-ingredient" type="button">
+                <i class="fa fa-plus"></i>
+                Add Another Ingredient
+            </button>
+
+            <div class="form-group">
+                <button class="btn get-recipes">Find Recipes</button>
+            </div> <!-- form-group// -->
+        </form>
+
+    </div>
+
+    <div class="container search-input" id="meal-input">
+        <h4>2. What type of item are you searching for?</h4>
+
+        <form action="{{ url_for('search_recipes')}}" method="post" id="meal-form">
+
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="hidden" value="item" name="query_type">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <select class="form-control user-input" id="menu-selection" name="item">
+                    <option name="breakfast" value="main course">Main Course</option>
+                    <option name="lunch" value="side dish">Side Dish</option>
+                    <option name="dinner" value="dessert">Dessert</option>
+                    <option name="dessert" value="breakfast">Breakfast</option>
+                    <option name="dessert" value="soup">Soup</option>
+                    <option name="dessert" value="beverage">Beverage</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button class="btn get-recipes" type="submit">Find Recipes</button>
+            </div> <!-- form-group// -->
+
+        </form>
+
+    </div>
+
+    <div class="container search-input" id="allergies-input">
+        <h4>2. What allergies do you have? </h4>
+
+        <form action="{{ url_for('search_recipes')}}" method="post" id="restrictions-form">
+
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="hidden" value="allergies" name="query_type">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <select class="selectpicker user-input" multiple data-live-search="true" id="allergies-selection" name="allergies" data-width="100%">>
+                    <option name="gluten-free" value="gluten-free">Gluten</option>
+                    <option name="dairy-free" value="dairy-free">Dairy</option>
+                    <option name="soy-free" value="soy-free">Soy</option>
+                    <option name="nut-free" value="nut-free">Peanut</option>
+                    <option name="shellfish-free" value="shellfish-free">Shellfish</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button class="btn get-recipes" type="submit">Find Recipes</button>
+            </div> <!-- form-group// -->
+
+        </form>
+
+    </div>
+
+    <div class="loader hiding">
+        <h4 id="loader-header">Loading recipes based on your search...</h4>
+        <div>
+            <img src="/static/img/loading_fruit.gif" alt="Loading...">
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+
+/* ---------- Make recipes page responsive to screensize --------- */
+
+@media (min-width: 34em) {
+    .card-columns {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 1;
+    }
+}
+
+@media (min-width: 48em) {
+    .card-columns {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 2;
+    }
+}
+
+@media (min-width: 62em) {
+    .card-columns {
+        -webkit-column-count: 4;
+        -moz-column-count: 4;
+        column-count: 3;
+    }
+}
+
+@media (min-width: 75em) {
+    .card-columns {
+        -webkit-column-count: 5;
+        -moz-column-count: 5;
+        column-count: 4;
+    }
+}
+
+/* ---------- Random Page Elements --------- */
+
+.header-text {
+    text-align: center;
+    margin: 0 auto;
+    color: lightblue;
+}
+
+#results-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.total-time {
+    color: #FFBE4D;
+}
+
+h5 {
+    font: 200 28px/1.5 'Lobster Two', Helvetica, sans-serif;
+}
+
+#based_on {
+    margin: 0 auto;
+    text-align: center;
+    color: grey;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+/* ---------- Special Button Formats ---------- */
+
+.btn {
+    background-color: lightblue;
+    color: white;
+    text-align: center;
+    margin:0 auto;
+}
+
+.btn:hover {
+    background-color: #5f9ea0;
+    color: white;
+}
+
+a:hover{
+    color: black;
+}
+
+.save {
+    background-color: #FFBE4D;
+    color: white;
+}
+
+.checked {
+    margin-top: 20px;
+    background-color: lightgrey;
+    color: white;
+}
+
+.checked:hover {
+    background-color: lightgrey;
+    color: white;
+}
+
+

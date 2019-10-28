@@ -1,0 +1,125 @@
+
+
+/* ----- Make single recipe screen-size responsive ---- */
+
+@media (min-width: 992px) {
+    body #recipe-container {
+        width: 80%;
+    }
+    #recipe-container #recipe-img-container {
+        width: 40%;
+    }
+    #recipe-container #recipe-instructions {
+        width: 50%;
+    }
+    #recipe-container #header-recipe {
+        width: 50%;
+    }
+}
+
+@media (min-width: 600px) {
+    body #recipe-container {
+        width: 90%;
+    }
+    #recipe-container #recipe-img-container {
+        width: 50%;
+    }
+    #recipe-container #recipe-instructions {
+        width: 60%;
+    }
+    #recipe-container #header-recipe {
+        width: 60%;
+    }
+}
+
+@media (max-width: 600px) {
+    body #recipe-container {
+        width: 100%;
+    }
+    #recipe-container #recipe-img-container {
+        width: 70%;
+    }
+    #recipe-container #recipe-instructions {
+        width: 80%;
+    }
+}
+
+/* ----- Fonts ---- */
+
+h3 {
+    font: 200 50px/1.5 'Lobster Two', Helvetica, sans-serif;
+    text-align: center;
+}
+
+h4 {
+    font: 200 30px/1.5 'Lobster Two', Helvetica, sans-serif;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 0px;
+    padding: 3px;
+}
+
+/* ------ Recipe Container Elements ----- */
+
+#recipe-container {
+    text-align: center;
+    margin:0 auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#recipe-container #header-recipe {
+    margin:0 auto;
+}
+
+#header-recipe hr {
+    border: solid 1px black;
+    margin-bottom: 30px;
+}
+
+#recipe-img-container {
+    margin:0 auto;
+    margin-bottom: 20px;
+}
+
+#recipe-img-container .recipe-img {
+    width: 90%;
+}
+
+#recipe-instructions {
+    border-radius: 20px;
+    margin:0 auto;
+    text-align: left;
+    background-color: #f1f1f1;
+    padding: 20px;
+    padding-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#allergens {
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+/* -------- Button Formatting ------ */
+
+.save {
+    background-color: #FFBE4D;
+    color: white;
+}
+
+.checked {
+    margin-top: 20px;
+    background-color: lightgrey;
+    color: white;
+}
+
+.checked:hover {
+    background-color: lightgrey;
+    color: white;
+}

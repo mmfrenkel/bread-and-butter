@@ -1,0 +1,141 @@
+
+/* --------- Common, general elements of all pages ------- **/
+
+#title {
+    font: 400 100px/1.3 'Lobster Two', Helvetica, sans-serif;
+    font-size: 45px;
+    text-align: center;
+    color: lightyellow;
+    padding: 15px;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+    font-color: darkgrey;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+@media (min-width: 992px) {
+    #about-company::before {
+        content: "Bread&Butter was created for easy access to fast and satisfying recipes. By providing recipes based on meal item, food intolerance, and pantry ingredients, Bread&Butter provides options that work best for you!. Thank you for using this site!"
+    }
+}
+
+@media (min-width: 600px) {
+    #title::before {
+        content: "Bread&Butter";
+    }
+    #copyright::before {
+        content: "© 2019 Copyright:";
+    }
+    #copyright-company::before{
+        content: "All The Condiments, Inc.";
+    }
+}
+
+@media (max-width: 600px) {
+    #title::before {
+        content: "B&B";
+    }
+}
+
+#welcome{
+    color: black;
+}
+
+form {
+    font-size: 15px;
+}
+
+
+h3 {
+    font: 200 70px/1.5 'Lobster Two', Helvetica, sans-serif;
+}
+
+h4 {
+    font: 200 40px/1.5 'Lobster Two', Helvetica, sans-serif;
+}
+
+button {
+    border: none;
+    outline: none;
+}
+
+button:focus {
+    border: none !important;
+    outline: none !important;
+}
+
+
+/* ---------- Navigation Bar Configuration ------- */
+
+.navbar {
+    background-color: #FFBE4D;
+    height: 75px;
+    text-align: center;
+    padding: 10px;
+    padding-bottom: 10px;
+    overflow: none;
+}
+
+.navbar ul {
+    text-align: center;
+}
+
+ul a {
+    font-size: 17px;
+    text-align: center;
+    color: lightyellow;
+}
+
+a:hover {
+    color: black;
+}
+
+
+/* -------- Footer Elements -------- */
+
+.footer {
+    margin-top: 50px;
+    background: #F5F5F5;
+    padding-top: 25px;
+    padding-bottom: 20px;
+}
+
+.footer footer-container {
+    width: 100px;
+}
+
+.footer-container row {
+    width: 95%;
+    text-align: center;
+}
+
+.footer div {
+    font-size: 15px;
+}
+
+.footer a {
+    color: black;
+    font-size: 20px;
+    padding: 10px;
+}
+.footer a:hover {
+    color: black;
+}
+
+.footer p {
+    padding: 0px;
+}
+
+.footer .footer-copyright {
+    font-size: 15px;
+}
+
+#copyright-company {
+    font: 200 25px/1.5 'Lobster Two', Helvetica, sans-serif;
+}
+
+/* -----------------------------------*/

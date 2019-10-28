@@ -1,0 +1,73 @@
+
+/* ------ Make login page screen-size responsive ----- */
+
+@media (min-width: 400px) {
+    .center_box {
+        width: 40%;
+    }
+}
+
+@media (max-width: 400px) {
+    .center_box {
+        width: 70%;
+    }
+}
+
+@media (max-width: 300px) {
+    .center_box {
+        width: 90%;
+    }
+}
+
+
+/* ------ Headers ----- */
+
+hr {
+    border: 0.75px solid back;
+}
+
+h4 {
+    color: #cc5500;
+}
+
+h5 {
+    padding-top: 10px;
+    font-size: 16px;
+}
+
+a {
+    color: #cc5500;
+}
+
+
+/* ------ General CSS  ----- */
+
+body {
+    background-image: url('/static/img/food_1.jpg');
+}
+
+.center_box {
+    padding: 20px;
+    padding-bottom: 30px;
+    max-width: 600px;
+    text-align: center;
+    background-color: white;
+    margin:0 auto;
+    margin-bottom: 8%;
+    margin-top: 8%;
+}
+
+form {
+    padding: 20px;
+}
+
+.btn {
+    background-color: #cc5500;
+    color: white;
+    text-align: center;
+    margin:0 auto;
+    border: none;
+    outline:none;
+}
+
+
