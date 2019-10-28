@@ -130,10 +130,10 @@ def search_recipes():
     if query_type == 'item':
         recipe_list = spoonacular_api.get_recipes_by_meal_item(
             request.form.getlist('item'),
-            number_of_results=10                                                 # Results limited to 10 due to turn-around time.
+            number_of_results=10  # Results limited to 10 due to turn-around time.
         )
         recipe_list = assign_saved_by_user(recipe_list, current_user.username)   # Is the recipe saved by the user?
-        search_based_on = request.form.getlist('item')                           # What did the user submit for the search?
+        search_based_on = request.form.getlist('item')                           # What user submitted for the search
 
     elif query_type == 'ingredients':
         recipe_list = spoonacular_api.get_recipes_by_ingredients(
@@ -276,7 +276,7 @@ def assign_saved_by_user(recipe_list, username, database=db):
 
     # Get all currently saved recipes...
     saved_recipes_ids = database.get_saved_recipes_by_user(username)
-    new_recipe_list = list()
+    new_recipe_list = []
 
     for recipe_dict in recipe_list:
 

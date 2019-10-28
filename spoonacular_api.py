@@ -156,4 +156,4 @@ class SpoonacularAPI:
         :param input_list: a list of items to format (e.g., ['apples', 'chicken', 'quinoa']
         :return: formatted string, ready to be interested into request url (e.g., 'apples%2Cchicken%2Cquinoa')
         """
-        return str(input_list). replace("[", "").replace("]", "").replace(" ", "").replace("'", "").replace(",", "%2C")
+        return ', '.join(input_list).replace(" ", "").replace("'", "").replace(",", "%2C")
