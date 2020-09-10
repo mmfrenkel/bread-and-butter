@@ -2,7 +2,8 @@
 /* --------- Common, general elements of all pages ------- **/
 
 #title {
-    font: 400 100px/1.3 'Lobster Two', Helvetica, sans-serif;
+    font: 400 100px/1.3;
+    font-family: 'Lobster Two', cursive;
     font-size: 45px;
     text-align: center;
     color: lightyellow;
@@ -19,7 +20,7 @@ body {
 
 @media (min-width: 992px) {
     #about-company::before {
-        content: "Bread&Butter was created for easy access to fast and satisfying recipes. By providing recipes based on meal item, food intolerance, and pantry ingredients, Bread&Butter provides options that work best for you!. Thank you for using this site!"
+        content: "Bread&Butter was created for easy access to fast and satisfying recipes. By providing recipes based on meal item, food intolerance, and pantry ingredients, Bread&Butter provides options that work best for you!."
     }
 }
 
@@ -28,7 +29,7 @@ body {
         content: "Bread&Butter";
     }
     #copyright::before {
-        content: "© 2019 Copyright:";
+        content: "© 2020 Copyright:";
     }
     #copyright-company::before{
         content: "All The Condiments, Inc.";
@@ -135,7 +136,8 @@ a:hover {
 }
 
 #copyright-company {
-    font: 200 25px/1.5 'Lobster Two', Helvetica, sans-serif;
+    font: 200 25px/1.5;
+    font-family: 'Lobster Two', cursive;
 }
 
 /* -----------------------------------*/
