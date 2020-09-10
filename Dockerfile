@@ -12,9 +12,6 @@ RUN apk update && \
 	pip install --no-cache-dir -r requirements.txt && \
 	apk del .build-deps
 
-# port number the container should be running on
-EXPOSE 5000
-
 # RUN APPLICATION
 CMD ["flask", "run"]
 
