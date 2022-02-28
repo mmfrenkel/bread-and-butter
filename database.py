@@ -5,13 +5,12 @@ from models import *
 
 
 class RecipeDatabase:
-
     def __init__(self):
         self.engine = None
         self.session = None
 
     def initiate_session(self):
-        """ Creates the SQLAlchemy Session to be used whenever a class method is used. """
+        """Creates the SQLAlchemy Session to be used whenever a class method is used."""
 
         # Check for environment variable, warn if not available
         if not os.getenv("DATABASE_URL"):
@@ -24,7 +23,7 @@ class RecipeDatabase:
             print(f"Failed to create session, See more: {e}")
 
     def initialize(self):
-        """ Initializes the recipe database, if not existing, by creating all database tables."""
+        """Initializes the recipe database, if not existing, by creating all database tables."""
 
         self.initiate_session()
         Base.metadata.create_all(self.engine)
@@ -76,7 +75,7 @@ class RecipeDatabase:
             last_name=last_name,
             username=username,
             email=email,
-            password=password
+            password=password,
         )
 
         self.session.add(new_user)
@@ -93,8 +92,7 @@ class RecipeDatabase:
 
         user = self.get_user_by_username(username)
         new_saved_recipe = UserSavedRecipes(
-            user_id=user.id,
-            spoonacular_recipe_id=spoonacular_id
+            user_id=user.id, spoonacular_recipe_id=spoonacular_id
         )
 
         self.session.add(new_saved_recipe)
@@ -109,5 +107,7 @@ class RecipeDatabase:
         """
 
         user = self.get_user_by_username(username)
-        saved_recipes = self.session.query(UserSavedRecipes).filter_by(user_id=user.id).all()
+        saved_recipes = (
+            self.session.query(UserSavedRecipes).filter_by(user_id=user.id).all()
+        )
         return [recipe.spoonacular_recipe_id for recipe in saved_recipes]

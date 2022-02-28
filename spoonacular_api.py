@@ -5,19 +5,17 @@ import requests
 class SpoonacularAPI:
 
     def __init__(self):
-        self.base_url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+        self.base_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
         self.headers = {
             "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-            "X-RapidAPI-Key": self._get_api_key()
+            "X-RapidAPI-Key": self._get_api_key(),
         }
 
     @staticmethod
     def _get_api_key():
         """Fetches the api key from environmental variables."""
-
         if not os.getenv("SPOON_API_KEY"):
             raise RuntimeError("SPOON_API_KEY is not set")
-
         return os.getenv("SPOON_API_KEY")
 
     def get_recipes_by_ingredients(self, ingredients_list, number_of_results):
@@ -31,8 +29,9 @@ class SpoonacularAPI:
 
         # Make sure that query is in the right format
         ingredients_formatted = self._format_list_for_query(ingredients_list)
-        url = '{}/recipes/findByIngredients?number={}&ranking=1&ignorePantry=false&ingredients={}'.\
-            format(self.base_url, number_of_results, ingredients_formatted)
+        url = "{}/recipes/findByIngredients?number={}&ranking=1&ignorePantry=false&ingredients={}".format(
+            self.base_url, number_of_results, ingredients_formatted
+        )
 
         recipe_ids = self._get_recipe_ids(url, search_by_ingredients=True)
         return [self.get_recipe_by_id(recipe_id) for recipe_id in recipe_ids]
@@ -48,8 +47,9 @@ class SpoonacularAPI:
 
         # Make sure that query is in the right format
         item_type_formatted = item_type[0].replace(" ", "+")
-        url = '{}/recipes/search?number={}&offset=0&type={}'.\
-            format(self.base_url, number_of_results, item_type_formatted)
+        url = "{}/recipes/search?number={}&offset=0&type={}".format(
+            self.base_url, number_of_results, item_type_formatted
+        )
 
         recipe_ids = self._get_recipe_ids(url)
         return [self.get_recipe_by_id(recipe_id) for recipe_id in recipe_ids]
@@ -65,8 +65,9 @@ class SpoonacularAPI:
 
         # Make sure that query is in the right format
         allergies_formatted = self._format_list_for_query(allergies_list)
-        url = '{}/recipes/search?intolerances={}&number={}&offset=0'.\
-            format(self.base_url, allergies_formatted, number_of_results)
+        url = "{}/recipes/search?intolerances={}&number={}&offset=0".format(
+            self.base_url, allergies_formatted, number_of_results
+        )
 
         recipe_ids = self._get_recipe_ids(url)
         return [self.get_recipe_by_id(recipe_id) for recipe_id in recipe_ids]
@@ -77,7 +78,7 @@ class SpoonacularAPI:
         :return: single recipe identifier (Spoonacular API recipe id)
         """
 
-        url = '{}/recipes/random?number=1'.format(self.base_url)
+        url = "{}/recipes/random?number=1".format(self.base_url)
         return self._get_recipe_ids(url, random_recipe=True)[0]
 
     def _get_recipe_ids(self, url, random_recipe=False, search_by_ingredients=False):
@@ -95,17 +96,17 @@ class SpoonacularAPI:
 
         if response.status_code != 200:
             raise RuntimeError(
-                f'Woah there, something went wrong with the Spoonacular API! '
+                f"Woah there, something went wrong with the Spoonacular API! "
                 f'{response.status_code}: {response.json()["message"]}'
             )
 
         # Responses from API differ very slightly based on post request/category, but all provide ids
         if search_by_ingredients:
-            return [recipe['id'] for recipe in response.json()]
+            return [recipe["id"] for recipe in response.json()]
         elif random_recipe:
-            return [response.json()['recipes'][0]['id']]
+            return [response.json()["recipes"][0]["id"]]
         else:
-            return[recipe['id'] for recipe in response.json()['results']]
+            return [recipe["id"] for recipe in response.json()["results"]]
 
     def get_recipe_by_id(self, recipe_id):
         """
@@ -114,9 +115,13 @@ class SpoonacularAPI:
         :return: dictionary containing information for one recipe
         """
 
-        url = f'{self.base_url}/recipes/{recipe_id}/information'
+        url = f"{self.base_url}/recipes/{recipe_id}/information"
         response = requests.get(url, headers=self.headers)
-        return self._format_recipe(response.json()) if response.status_code == 200 else None
+        return (
+            self._format_recipe(response.json())
+            if response.status_code == 200
+            else None
+        )
 
     @staticmethod
     def _format_recipe(recipe):
@@ -125,28 +130,32 @@ class SpoonacularAPI:
         :param recipe: json object returned from Spoonacular API for a single recipe
         :return: new dictionary object representing recipe
         """
-
-        # Some fields are not consistently returned from the API, so handle by checking if they exist first.
-        if 'analyzedInstructions' in recipe.keys() and len(recipe['analyzedInstructions']):
-            step_instructions = recipe['analyzedInstructions'][0]['steps']
+        # Some fields are not consistently returned from the API, make sure they exist first.
+        if "analyzedInstructions" in recipe.keys() and len(
+            recipe["analyzedInstructions"]
+        ):
+            step_instructions = recipe["analyzedInstructions"][0]["steps"]
         else:
             step_instructions = None
 
         return {
-            'spoonacular_id': recipe['id'],
-            'dish_name': recipe['title'],
-            'servings': recipe['servings'] if 'servings' in recipe.keys() else None,
-            'image': recipe['image'] if 'image' in recipe.keys() else None,
-            'is_vegetarian': recipe['vegetarian'],
-            'is_vegan': recipe['vegan'],
-            'is_gluten_free': recipe['glutenFree'],
-            'is_dairy_free': recipe['dairyFree'],
-            'cook_time_min': recipe['cookingMinutes'] if 'cookingMinutes' in recipe.keys() else None,
-            'prep_time_min': recipe['preparationMinutes'] if 'preparationMinutes' in recipe.keys() else None,
-            'spoonacular_score': recipe['spoonacularScore'],
-            'ingredients': [ingredient['originalString'] for ingredient in recipe['extendedIngredients']],
-            'instructions': recipe['instructions'] if 'instructions' in recipe.keys() else None,
-            'step_instructions': step_instructions
+            "spoonacular_id": recipe["id"],
+            "dish_name": recipe["title"],
+            "servings": recipe.get("servings", None),
+            "image": recipe.get("image", None),
+            "is_vegetarian": recipe["vegetarian"],
+            "is_vegan": recipe["vegan"],
+            "is_gluten_free": recipe["glutenFree"],
+            "is_dairy_free": recipe["dairyFree"],
+            "cook_time_min": recipe.get("cookingMinutes", None),
+            "prep_time_min": recipe.get("preparationMinutes", None),
+            "spoonacular_score": recipe["spoonacularScore"],
+            "ingredients": [
+                ingredient["originalName"]
+                for ingredient in recipe["extendedIngredients"]
+            ],
+            "instructions": recipe.get("instructions", None),
+            "step_instructions": step_instructions,
         }
 
     @staticmethod
@@ -156,4 +165,6 @@ class SpoonacularAPI:
         :param input_list: a list of items to format (e.g., ['apples', 'chicken', 'quinoa']
         :return: formatted string, ready to be interested into request url (e.g., 'apples%2Cchicken%2Cquinoa')
         """
-        return ', '.join(input_list).replace(" ", "").replace("'", "").replace(",", "%2C")
+        return (
+            ", ".join(input_list).replace(" ", "").replace("'", "").replace(",", "%2C")
+        )
