@@ -78,7 +78,6 @@ def register():
     """
 
     if request.method == "POST":
-
         username = request.form.get("username")
         password = request.form.get("password")
         first_name = request.form.get("first_name")
@@ -113,10 +112,11 @@ def register():
             )
 
         # If input is OK, add a new user to the database
+        print("got to here...")
         db.create_new_user(
             username=username,
             password=generate_password_hash(
-                request.form.get("password"), method="sha256"
+                request.form.get("password") 
             ),
             email=email,
             first_name=first_name,

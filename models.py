@@ -16,7 +16,7 @@ class User(Base, UserMixin):
     last_name = Column(String(50))
     username = Column(String(15), unique=True)
     email = Column(String(50), unique=True)
-    password = Column(String(80))
+    password = Column(String(200)) # long enough to hold scrypt hash
 
     def __repr__(self):
         return f'{self.first_name} {self.last_name}'
