@@ -138,6 +138,8 @@ class SpoonacularAPI:
         else:
             step_instructions = None
 
+        print(recipe)
+
         return {
             "spoonacular_id": recipe["id"],
             "dish_name": recipe["title"],
@@ -147,9 +149,9 @@ class SpoonacularAPI:
             "is_vegan": recipe["vegan"],
             "is_gluten_free": recipe["glutenFree"],
             "is_dairy_free": recipe["dairyFree"],
-            "cook_time_min": recipe.get("cookingMinutes", None),
-            "prep_time_min": recipe.get("preparationMinutes", None),
-            "spoonacular_score": recipe["spoonacularScore"],
+            "cook_time_min": SpoonacularAPI._get_execution_time_minutes(recipe, "cookingMinutes"),
+            "prep_time_min": SpoonacularAPI._get_execution_time_minutes(recipe, "preparationMinutes"),
+            "spoonacular_score": round(recipe["spoonacularScore"]),
             "ingredients": [
                 ingredient["originalName"]
                 for ingredient in recipe["extendedIngredients"]
@@ -157,6 +159,11 @@ class SpoonacularAPI:
             "instructions": recipe.get("instructions", None),
             "step_instructions": step_instructions,
         }
+
+    @staticmethod
+    def _get_execution_time_minutes(recipe_payload, key):
+        value = recipe_payload.get(key, None)
+        return value if value and value > 0 else None
 
     @staticmethod
     def _format_list_for_query(input_list):
