@@ -182,6 +182,6 @@ Future releases of _Bread&Butter_ website will provide more search capabilities,
 diet (e.g., vegetarian or vegan), occasion (e.g., holiday, birthday, etc.), and calorie count. Additionally, users 
 will be able to submit their own recipes and will be enabled to email recipes to themselves and others.
 
-Other releases will include LLM based suggestions.
+Other releases will include LLM based suggestions, in addition to Spoonacular.
 
 Created by: megfrenkel
