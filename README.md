@@ -1,6 +1,8 @@
 
 # Bread&Butter
 
+Last Updated August 2022
+
 ## I. About
 
 _Bread&Butter_ is an interactive Flask web application that allows users to search recipes derived from the Spoonacular 
